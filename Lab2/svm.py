@@ -83,33 +83,3 @@ class SupportVectorMachine:
         result[result < 0] = -1
         result[result >= 0] = 1
         return result
-
-
-if __name__ == '__main__':
-    import pandas as pd
-    import pylab as plt
-    from sklearn.model_selection import train_test_split
-    from sklearn.metrics import accuracy_score
-
-    df = pd.read_csv('train.csv', index_col=0)
-
-    df = df[(df['type'] == 'Ghoul') | (df['type'] == 'Goblin')]
-    df = pd.get_dummies(df, columns=['color'])
-    df['type'] = df['type'].map({'Ghoul':-1, 'Goblin':+1})
-
-    print(df[:10])
-
-    features = list(df.columns)
-    features.remove('type')
-    X = df[features].values
-    y = df['type'].values
-
-    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2)
-
-    model = SupportVectorMachine(C=1,n_passes=100).fit(X_train, y_train)
-    print(accuracy_score(model.predict(X_test), y_test))
-
-    from sklearn.svm import SVC
-
-    model = SVC().fit(X, y)
-    print(accuracy_score(model.predict(X_test), y_test))
