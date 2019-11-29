@@ -12,7 +12,7 @@ def make_regression_dataset():
     return x, y
 
 
-def polinomial_regression(x, y, n_degree):
+def polynomial_regression(x, y, n_degree):
     x = PolynomialFeatures(n_degree).fit_transform(x)
     xTx = np.dot(x.T, x)
     xy = np.dot(x.T, y)
@@ -24,4 +24,4 @@ def polinomial_regression(x, y, n_degree):
 if __name__ == '__main__':
     x, y = make_regression_dataset()
     for i in range(15):
-        polinomial_regression(x, y, i)
+        polynomial_regression(x, y, i)
